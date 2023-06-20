@@ -23,12 +23,14 @@ class CCurl {
 
         $method = strtoupper($method);
 
-        foreach($data as $key => $val){
-            if($key=='auth'){
-                $user = $val[0];
-                $pass = $val[1];
-                curl_setopt($ch, CURLOPT_USERPWD, $user.':'.$pass);
-            }
+        if(is_array($data)){
+            foreach($data as $key => $val){
+                if($key=='auth'){
+                    $user = $val[0];
+                    $pass = $val[1];
+                    curl_setopt($ch, CURLOPT_USERPWD, $user.':'.$pass);
+                }
+            }            
         }
 
         if(isset($data['auth'])) unset($data['auth']);
@@ -85,6 +87,9 @@ class CCurl {
 
             # but we do need to process request headers - find any X-WP* headers
             curl_setopt($ch, CURLOPT_HEADERFUNCTION, $callback);
+        }else{
+            if(is_array($head_type))
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $head_type);
         }
 
         // EXECUTE:
