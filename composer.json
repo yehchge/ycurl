@@ -10,7 +10,7 @@
         "php":">=5.3.0"
     },
     "suggest": {
-        "ext-curl": "Required for CURL handler support",
+        "ext-curl": "Required for CURL handler support"
     },
     "archive": {
         "exclude": ["*.sh", "tests/", "README.md", ".gitignore", "*.zip", "*.xml"]
