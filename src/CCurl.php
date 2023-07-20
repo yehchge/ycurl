@@ -95,7 +95,24 @@ class CCurl {
         // EXECUTE:
         $res = curl_exec($ch);
 
+        $sErrMessage = '';
+
+        // Check HTTP status code
+        if (!curl_errno($ch)) {
+            switch ($http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE)) {
+                case 200:  # OK
+                    break;
+                default:
+                    $sErrMessage = 'Unexpected HTTP code: '.$http_code;
+                    break;
+            }
+        }
+
         curl_close($ch);
+
+        if($sErrMessage){
+            return $sErrMessage;
+        }
 
         # process the required headers... 
         // printf( '<pre>%s</pre>', print_r( $headers, true ) );
